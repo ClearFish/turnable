@@ -38,7 +38,7 @@ const count = ref(0)
     height: 300px;
     border-radius: 0 150px 150px 0;
     transform-origin: left center;
-    background-image: linear-gradient(135deg, #f6d365, #f6d365 105px, transparent 105px);
+    background-image: linear-gradient(135deg, #f6d365, #f6d365 105px, transparent 107px);
     .piece {
         position: absolute;
         left: 0;
@@ -48,10 +48,10 @@ const count = ref(0)
         transform-origin: left center;
         border-radius: 0 150px 150px 0;
          &:nth-child(2n) {
-            background-image: linear-gradient(135deg, #f6d365, #f6d365 105px, transparent 105px);
+            background-image: linear-gradient(135deg, #f6d365, #f6d365 105px, transparent 107px);
         }
         &:nth-child(2n+1) {
-            background-image: linear-gradient(135deg, #ff5858, #ff5858 105px, transparent 105px);
+            background-image: linear-gradient(135deg, #ff5858, #ff5858 105px, transparent 107px);
         }
 
     }
