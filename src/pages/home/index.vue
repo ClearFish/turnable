@@ -4,7 +4,8 @@ import Spin2 from "@/assets/game/spin-2.png"
 import Spin3 from "@/assets/game/spin-3.png"
 import Spin4 from "@/assets/game/spin-4.png"
 import Spin5 from "@/assets/game/spin-5.png"
-import { ref } from 'vue'
+import LuckyWheel from '@/utils/luck.ts';
+import { onMounted, ref } from 'vue'
 const PRIZELIST = ref([
   { desc: '中奖一元', bgColor: '#195C26', color: '#FFF', imageId: Spin1 },
   { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#FEDF1A', imageId: '',number:1 },
@@ -15,6 +16,26 @@ const PRIZELIST = ref([
   { desc: '中奖四元', bgColor: '#195C26', color: '#FFF', imageId:  Spin1},
   { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#FFF', imageId: Spin5 },
 ]);
+let luckyWheelRef = ref(null)
+onMounted(()=>{
+  luckyWheelRef.value = new LuckyWheel({
+      selector: '.pie',
+      segsLen: PRIZELIST.length,
+      onFinished: (index) => {
+        console.log('finished-->', index);
+      },
+  })
+})
+  const handleStart = () => {
+    luckyWheelRef.value.play();
+    setTimeout(()=>{
+      handleEnd()
+    },5000)
+  };
+
+  const handleEnd = () => {
+    luckyWheelRef.value.stop(7);
+  };
 </script>
 
 <template>
@@ -32,8 +53,8 @@ const PRIZELIST = ref([
           <p class="title" v-if="item.number" :style="{color:item.color}">{{item.number}}</p>
         </div>
     </div>
-    <div class="center_bg"></div>
   </div>
+  <div class="center_bg" @click="handleStart"></div>
   <div class="bg_box"></div>
   <div class="pointer_box"></div>
 </div>
@@ -96,18 +117,18 @@ const PRIZELIST = ref([
         }
       }
     }
-    .center_bg {
+  }
+  .center_bg {
       position: absolute;
-      top: 50%;
+      top: 57%;
       left: 50%;
       transform: translate(-50%,-50%);
       background: url("@/assets/game/draw.png") no-repeat center;
       background-size: 100% 100%;
       width: 100px;
       height: 90px;
+      z-index: 3;
     }
-
-  }
   .bg_box {
     width: 100%;
     height: 100%;
