@@ -38,7 +38,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  /* background: rgba(0, 0, 0, 0.8); */
+  background: #25262b;
 }
 
 h1 {
@@ -74,6 +74,11 @@ button:focus-visible {
   margin: 0 auto;
   padding: 0;
   text-align: center;
+  min-height: 100vh;
+}
+p,div,ul,li {
+  padding: 0;
+  margin: 0;
 }
 
 @media (prefers-color-scheme: light) {

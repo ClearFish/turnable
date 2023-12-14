@@ -1,154 +1,238 @@
 <script setup>
-import Spin1 from "@/assets/game/spin-1.png"
-import Spin2 from "@/assets/game/spin-2.png"
-import Spin3 from "@/assets/game/spin-3.png"
-import Spin4 from "@/assets/game/spin-4.png"
-import Spin5 from "@/assets/game/spin-5.png"
-import LuckyWheel from '@/utils/luck.ts';
-import { onMounted, ref } from 'vue'
-const PRIZELIST = ref([
-  { desc: '中奖一元', bgColor: '#195C26', color: '#FFF', imageId: Spin1 },
-  { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#FEDF1A', imageId: '',number:1 },
-  { desc: '中奖二元', bgColor: '#195C26', color: '#FFF', imageId: Spin2 },
-  { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#FEDF1A', imageId: '',number:1000 },
-  { desc: '中奖三元', bgColor: '#195C26', color: '#FFF', imageId: Spin4 },
-  { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#C02A16', imageId: '',number:50 },
-  { desc: '中奖四元', bgColor: '#195C26', color: '#FFF', imageId:  Spin1},
-  { desc: '谢谢惠顾', bgColor: '#EB9713', color: '#FFF', imageId: Spin5 },
-]);
-let luckyWheelRef = ref(null)
+import TrunAble from "@/components/turnable.vue"
+import { onMounted, ref } from "vue"
+let leftVal = ref(null)
+let titleList = ref([
+  {name:'Relatório',value:'1'},
+  {name:'Minha Referencia',value:'2'}
+])
+let scrollList = ref([
+  {account:'1',name:'Kobe Bryant',bonous:100},
+  {account:'2',name:'Kobe Bryant',bonous:100},
+  {account:'3',name:'Kobe Bryant',bonous:100},
+  {account:'4',name:'Kobe Bryant',bonous:100},
+  {account:'5',name:'Kobe Bryant',bonous:100},
+  {account:'6',name:'Kobe Bryant',bonous:100},
+  {account:'7',name:'Kobe Bryant',bonous:100},
+  {account:'8',name:'Kobe Bryant',bonous:100},
+  {account:'9',name:'Kobe Bryant',bonous:100},
+  {account:'10',name:'Kobe Bryant',bonous:100},
+  {account:'11',name:'Kobe Bryant',bonous:100},
+  {account:'12',name:'Kobe Bryant',bonous:100},
+  {account:'13',name:'Kobe Bryant',bonous:100},
+  {account:'14',name:'Kobe Bryant',bonous:100},
+  {account:'15',name:'Kobe Bryant',bonous:100},
+  {account:'16',name:'Kobe Bryant',bonous:100},
+  {account:'17',name:'Kobe Bryant',bonous:100},
+  {account:'18',name:'Kobe Bryant',bonous:100},
+  {account:'19',name:'Kobe Bryant',bonous:100},
+  {account:'20',name:'Kobe Bryant',bonous:100}
+])
 onMounted(()=>{
-  luckyWheelRef.value = new LuckyWheel({
-      selector: '.pie',
-      segsLen: PRIZELIST.length,
-      onFinished: (index) => {
-        console.log('finished-->', index);
-      },
-  })
+  leftVal.value = "calc(10% - 10px)"
 })
-  const handleStart = () => {
-    luckyWheelRef.value.play();
-    setTimeout(()=>{
-      handleEnd()
-    },5000)
-  };
-
-  const handleEnd = () => {
-    luckyWheelRef.value.stop(7);
-  };
 </script>
 
 <template>
-<div class="big_box">
-  <div class="pie">
-    <div class="slice" 
-         v-for="(item,index) in PRIZELIST" 
-         :key="index"
-         :style="{ backgroundColor: item.bgColor,
-                  color: item.color,
-                  transform: `rotate(${index * 45}deg) skewY(-45deg)`}"
-    >
-        <div class="content">
-          <img v-if="item.imageId" :src="item.imageId" alt="">
-          <p class="title" v-if="item.number" :style="{color:item.color}">{{item.number}}</p>
+  <div class="home_box">
+    <div class="top_container">
+      <div class="top_box">
+        <img src="@/assets/game/spin-1.png" alt="" class="left_img">
+        <p class="moner"> R$ 95.79</p>
+        <div class="scar">
+          <img src="@/assets/game/pix.png" alt="">
+          <p class="right">SACAR</p>
         </div>
+      </div>
+      <div class="center_box">
+        <p class="title">95.79%</p>
+        <div class="progress">
+          <div class="point" :style="{left:leftVal}"></div>
+        </div>
+      </div>
+      <div class="needCash">
+        Ainda é necessário 
+        <span data-v-449fc671="" class="needCashNum">4.21</span>  
+        para realizar do saque 
+      </div>
+    </div>
+    <TrunAble/>
+    <div class="expre_time">
+      <p class="title">Expira time</p>
+      <p class="value">02:00</p>
+    </div>
+    <div class="share_box">
+      <p class="value"> Convide amigos para ajudar com saques </p>
+      <img src="@/assets/game/share_fill.svg" alt="">
+    </div>
+    <div class="list_box">
+      <div class="top_title">
+          <p v-for="(item,index) in titleList" :key="index">{{item.name}}</p>
+      </div>
+      <div class="scroll_content">
+        <div class="scroll_box">
+          <div class="scroll_cont">
+            <div class="item" v-for="(item,index) in scrollList" :key="index">
+              <p>{{item.account}}</p>
+              <p>{{item.name}}</p>
+              <p>{{item.bonous}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="center_bg" @click="handleStart"></div>
-  <div class="bg_box"></div>
-  <div class="pointer_box"></div>
-</div>
-
-  
 </template>
 
 <style scoped lang="scss">
-.big_box {
-  width: 320px;
-  height: 400px;
-  text-align: center;
-  margin: 30px auto;
-  background: #ffffff;
-  // border-radius: 50%;
-  // box-shadow: 4px 4px 34px rgba(0, 0, 0, 0.15);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-top: 60px;
-  box-sizing: border-box;
-    // 扇形布局核心样式
-  .pie {
-    width: 244px;
-    height: 244px;
-    position: relative;
-    border-radius: 50%;
-    overflow: hidden;
-    transform: rotate(0deg);
-    z-index: 2;
-    .slice {
-      overflow: hidden;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 50%;
-      height: 50%;
-      // css 画扇形 https://www.jianshu.com/p/3ab7e71ff810
-      transform-origin: 0% 100%;
-      text-align: left;
+.home_box {
+  width: 100%;
+  height: 100%;
+  padding: 50px 0;
+  .top_container {
+    background-color: rgb(35, 35, 39);
+    padding: 20px;
+    border-radius: 8px;
+    .top_box {
       display: flex;
-      .content {
-        // transform-origin: 0% 100%;
-        // skew 效果反转 https://www.v2ex.com/t/394630
-        // transform: skewY(45deg) rotate(-45deg);
-        transform: skewY(45deg) rotate(25deg);
-        width: 100%;
-        position: absolute;
-        left: -20px;
-        bottom: 25px;
-        text-align: center;
-        padding-right: 15px;
-        box-sizing: border-box;
-        font-weight: bolder;
+      align-items: center;
+      justify-content: space-between;
+      .left_img {
+        width: 52px;
+        height: 37px;
+      }
+      .moner {
+        color: #6ddf38;
+        font-size: 20px;
+        font-weight: 800;
+      }
+      .scar {
+        padding: 4px 12px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
         font-size: 14px;
+        font-weight: 700;
+        color: #fff;
+        background: #6ddf38;
         img {
-          width: 30px;
-          height: auto;
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+    .center_box {
+      margin-top: 8px;
+      .title{
+        color: #fff;
+        text-align: right;
+      }
+      .progress {
+        width: 100%;
+        height: 10px;
+        border-radius: 5px;
+        background: #6ddf38;
+        position: relative;
+        .point {
+          width: 10px;
+          height: 10px;
+          border-radius: 5px;
+          background: #fff;
+          position: absolute;
+          top: 0px;
+        }
+      }
+    }
+    .needCash {
+      margin-top: 10px;
+      color: #fff;
+      text-align: center;
+      .needCashNum {
+        color: #6ddf38;
+        font-weight: 600;
+      }
+    }
+  }
+  .expre_time {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(135, 149, 177);
+    .value {
+      color: #fff;
+      margin-left: 4px;
+    }
+  }
+  .share_box {
+    padding: 4px 10px;
+    width: 100%;
+    background: #202124;
+    border-radius: 4px;
+    margin-top: 10px;
+    color: #fff;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .list_box {
+    margin-top: 10px;
+    .top_title {
+      display: flex;
+      width: 100%;
+      height: 40px;
+      align-items: center;
+      background: #202124;
+      p {
+        flex: 1;
+        color: #9c9c9c;
+        text-align: center;
+        font-size: 16px;
+      }
+    }
+    .scroll_content {
+      width: 100%;
+      .scroll_box {
+        height: 200px;
+        overflow: hidden;
+        .scroll_cont {
+          height: 100%;
+          // transition-timing-function: linear;
+          // transition-duration: 12s;
+          // transform: translateY(-600px);
+          animation-name: scrollY;
+          animation-duration: 8s;
+          animation-iteration-count: infinite;
+          animation-fill-mode:forwards;
+          animation-timing-function: linear ;
+          .item {
+            display: flex;
+            justify-content: space-between;
+            height: 40px;
+            align-items: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            color: #fff;
+          }
         }
       }
     }
   }
-  .center_bg {
-      position: absolute;
-      top: 57%;
-      left: 50%;
-      transform: translate(-50%,-50%);
-      background: url("@/assets/game/draw.png") no-repeat center;
-      background-size: 100% 100%;
-      width: 100px;
-      height: 90px;
-      z-index: 3;
-    }
-  .bg_box {
-    width: 100%;
-    height: 100%;
-    background: url("@/assets/game/big_bg.png") no-repeat center;
-    background-size: 100% 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+}
+@keyframes scrollY {
+  from {
+    transform: translateY(0px);
   }
-  .pointer_box {
-    position: absolute;
-    left: 50%;
-    background: url("@/assets/game/pointer.png") no-repeat center;
-    background-size: 100% 100%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 62px;
-    z-index: 3;
-    top: 78px;
+  to {
+    transform: translateY(-600px);
   }
 }
 </style>
